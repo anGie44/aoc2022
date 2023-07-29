@@ -22,7 +22,7 @@ def calculateMaxNCalories(lines, n):
                 else:
                         elf_calories += int(l)
 
-        return heapq.nlargest(n, h)[0]
+        return sum(heapq.nlargest(n, h))
 
 if __name__ == "__main__":
         if len(sys.argv) != 2:
