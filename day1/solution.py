@@ -1,28 +1,32 @@
 import heapq
 import sys
 
-# Use min-heap
-# Reference: https://docs.python.org/3/library/heapq.html#module-heapq
-def populateHeap(h, val, maxLength):
-        if len(h) < maxLength or val > h[0]:
-                heapq.heappush(h, val)
-        if len(h) > maxLength:
-                heapq.heappop(h)
-
-
-def calculateMaxNCalories(lines, n):
-        elf_calories = 0
-        h = []
-
-        for line in lines:
-                l = line.strip()
-                if not l:
-                        populateHeap(h, elf_calories, n)
-                        elf_calories = 0
-                else:
-                        elf_calories += int(l)
-
-        return sum(heapq.nlargest(n, h))
+class DayOne:
+        def __init__(self, lines):
+                self.lines = lines
+                self.h = []
+        
+        def refreshHeap(self):
+                self.h = []
+        
+        def populateHeap(self, val, maxLength):
+                if len(self.h) < maxLength or val > self.h[0]:
+                        heapq.heappush(self.h, val)
+                if len(self.h) > maxLength:
+                        heapq.heappop(self.h)
+        
+        def calculateMaxNCalories(self,  n):
+                elf_calories = 0
+        
+                for line in self.lines:
+                        l = line.strip()
+                        if not l:
+                                self.populateHeap(elf_calories, n)
+                                elf_calories = 0
+                        else:
+                                elf_calories += int(l)
+        
+                return sum(heapq.nlargest(n, self.h))
 
 if __name__ == "__main__":
         if len(sys.argv) != 2:
@@ -30,7 +34,8 @@ if __name__ == "__main__":
                 exit(1)
         with open(sys.argv[1],  "r") as f:
                 lines = f.readlines()
-                part_one_result = calculateMaxNCalories(lines, 1)
-                part_two_result = calculateMaxNCalories(lines, 3)
-                
-                print('Part 1:{}\nPart 2:{}'.format(part_one_result, part_two_result))
+                d1 = DayOne(lines)
+                part_one_result = d1.calculateMaxNCalories(1)
+                d1.refreshHeap()
+                part_two_result = d1.calculateMaxNCalories(3)
+                print('Part 1: {}\nPart 2: {}'.format(part_one_result, part_two_result))
