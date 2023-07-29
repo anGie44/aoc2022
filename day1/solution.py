@@ -9,6 +9,8 @@ class DayOne:
         def refreshHeap(self):
                 self.h = []
         
+        # Use min-heap
+        # Reference: https://docs.python.org/3/library/heapq.html#module-heapq
         def populateHeap(self, val, maxLength):
                 if len(self.h) < maxLength or val > self.h[0]:
                         heapq.heappush(self.h, val)
